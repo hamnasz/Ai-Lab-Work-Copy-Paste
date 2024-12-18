@@ -23,7 +23,7 @@ In this lab, we learned how to import and utilize essential Python libraries tha
     - Example: `from sklearn.model_selection import train_test_split`
 
 ### Lab Directory
-[Lab 1: Importing Libraries](./Ai-Lab-Work-Copy-Paste/Lab_Task_1/)
+[Lab 1: Importing Libraries](https://github.com/hamnasz/Ai-Lab-Work-Copy-Paste/tree/main/Lab%20Task%201/)
 
 ---
 
@@ -86,6 +86,50 @@ print(a.count('my')) # Output: 2
     - Output: `2`
 
 ### Lab Directory
-[Lab 2: Python Basics](./Ai-Lab-Work-Copy-Paste/Lab_Task_2/)
+[Lab 2: Python Basics](https://github.com/hamnasz/Ai-Lab-Work-Copy-Paste/tree/main/Lab%20Task%202/)
 
 ---
+
+## Additional Lab Directories
+
+The repository also contains other lab tasks, each focused on specific concepts. You can explore them below:
+
+- [Lab Task 3](https://github.com/hamnasz/Ai-Lab-Work-Copy-Paste/tree/main/Lab%20Task%203/)
+- [Lab Task 4](https://github.com/hamnasz/Ai-Lab-Work-Copy-Paste/tree/main/Lab%20Task%204/)
+- [Lab Task 6](https://github.com/hamnasz/Ai-Lab-Work-Copy-Paste/tree/main/Lab%20Task%206/)
+- [Lab Task 8](https://github.com/hamnasz/Ai-Lab-Work-Copy-Paste/tree/main/Lab%20Task%208/)
+- [Lab Task 9](https://github.com/hamnasz/Ai-Lab-Work-Copy-Paste/tree/main/Lab%20Task%209/)
+
+---
+
+## Repository Structure
+
+The repository is organized as follows:
+```
+Ai-Lab-Work-Copy-Paste/
+|
+|-- Lab Task 1/
+|-- Lab Task 2/
+|-- Lab Task 3/
+|-- Lab Task 4/
+|-- Lab Task 6/
+|-- Lab Task 8/
+|-- Lab Task 9/
+```
+
+### How to Use
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/hamnasz/Ai-Lab-Work-Copy-Paste.git
+   ```
+2. Navigate to the desired lab directory to explore the tasks and solutions.
+
+---
+
+### Contributions
+Feel free to contribute by improving the code or adding new features. Submit a pull request with your changes.
+
+---
+
+### License
+This repository is licensed under the MIT License. See the [LICENSE](./LICENSE) file for more details.
