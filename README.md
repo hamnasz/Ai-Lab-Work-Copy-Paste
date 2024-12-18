@@ -90,81 +90,115 @@ print(a.count('my')) # Output: 2
 
 ---
 
+# Lab Task 3: Pandas Data Manipulation
+This lab focuses on performing data analysis and manipulation using the Pandas library in Python. We explored various functions and methods to understand and preprocess the dataset provided in the same directory.
+
+## Dataset Description
+The dataset, `data.csv`, contains information about weather conditions and related metrics. It includes the following columns:
+
+1. **BASEL_BBQ_weather**: Weather conditions for BBQ in Basel.
+2. **Temperature**: Numerical values indicating temperature.
+3. **Humidity**: Numerical values indicating humidity levels.
+4. **Wind_Speed**: Numerical values indicating wind speed.
+
+### Preview of the Dataset
+A quick look at the first five rows of the dataset can be achieved using the `head()` function:
+```python
+import pandas as pd
+
+# Load dataset
+df = pd.read_csv('data.csv')
+print(df.head())
+```
+Output:
+| BASEL_BBQ_weather | Temperature | Humidity | Wind_Speed |
+|--------------------|-------------|----------|------------|
+| Sunny             | 25          | 50       | 10         |
+| Cloudy            | 22          | 60       | 12         |
+| Rainy             | 18          | 80       | 5          |
+| Sunny             | 30          | 40       | 8          |
+| Cloudy            | 20          | 70       | 15         |
+
+## Code Walkthrough and Explanations
+
+### 1. Importing Libraries
+```python
+import pandas as pd
+```
+We imported Pandas for efficient data handling and manipulation.
+
+### 2. Reading the Dataset
+```python
+df = pd.read_csv('data.csv')
+```
+The dataset `data.csv` was loaded into a Pandas DataFrame named `df`.
+
+### 3. Dataset Overview
+- **`df.head()`**: Displays the first 5 rows of the dataset.
+    - Input: None
+    - Output: First 5 rows of the DataFrame.
+- **`df.shape`**: Returns the number of rows and columns in the dataset.
+    - Input: None
+    - Output: (Number of Rows, Number of Columns)
+- **`df.info()`**: Provides a concise summary of the dataset, including non-null counts and data types for each column.
+    - Input: None
+    - Output: DataFrame summary.
+
+### 4. Handling Missing Values
+- **`df.isnull()`**: Checks for missing values in the dataset. Returns a DataFrame of the same shape with `True` for missing and `False` for non-missing values.
+    - Input: None
+    - Output: DataFrame with boolean values indicating missing data.
+- **`df.isnull().sum()`**: Provides the total count of missing values for each column.
+    - Input: None
+    - Output: Series with column names as index and missing value counts as values.
+
+### 5. Converting Object Columns to Categorical
+```python
+for col in df.select_dtypes(include=['object']).columns:
+    df[col] = df[col].astype('category')
+```
+This code snippet converts all object-type columns to categorical type for efficient storage and faster processing.
+- **`df.select_dtypes(include=['object'])`**: Selects columns with data type `object`.
+- **`astype('category')`**: Changes the data type to `category`.
+
+### 6. Data Types
+```python
+print(df.dtypes)
+```
+- This prints the data types of all columns in the DataFrame after the conversions.
+
+### 7. Statistical Summary
+```python
+print(df.describe().T)
+```
+- **`df.describe()`**: Generates summary statistics for numerical columns (e.g., count, mean, standard deviation, min, max).
+- **`.T`**: Transposes the output for a clearer view.
+
+### 8. Grouping Data
+```python
+print(df.groupby('BASEL_BBQ_weather').mean())
+```
+- Groups the dataset by `BASEL_BBQ_weather` and calculates the mean of each numeric column for each group.
+
+### 9. Checking Value Presence
+```python
+is_present = True in df['BASEL_BBQ_weather'].values
+print(is_present)
+```
+- **`in` operator**: Checks if `True` is present in the column `BASEL_BBQ_weather`.
+    - Output: `True` or `False`.
+
+### 10. Accessing Specific Rows
+```python
+value_at_index = df.iloc[5]
+print(value_at_index)
+```
+- **`df.iloc[5]`**: Retrieves the row at index 5.
+    - Output: Data of the specific row.
+
 ---
-
-### [Lab Task 3](Ai-Lab-Work-Copy-Paste/Lab%20Task%203/)
-In **Lab Task 3**, we worked with the **data.csv** file for data analysis using Pandas. The dataset includes columns like 'job', 'education', 'contact', and others, with 126,030 rows and 8 columns.
-
-Key tasks performed:
-
-1. **Read and Inspect Data**:
-   ```python
-   import pandas as pd
-   df = pd.read_csv('data.csv')
-   df.head()
-   df.shape
-   df.info()
-   ```
-
-2. **Check Missing Values**:
-   ```python
-   df.isnull()
-   df.isnull().sum()
-   ```
-
-3. **Change Data Types**:
-   ```python
-   for col in df.select_dtypes(include=['object']).columns:
-       df[col] = df[col].astype('category')
-   df.dtypes
-   ```
-
-4. **Descriptive Statistics**:
-   ```python
-   df.describe().T
-   ```
-
-5. **Group and Aggregate Data**:
-   ```python
-   df.groupby('BASEL_BBQ_weather').mean()
-   ```
-
-6. **Check Presence of a Value**:
-   ```python
-   is_present = True in df['BASEL_BBQ_weather'].values
-   is_present
-   ```
-
-7. **Access Specific Data**:
-   ```python
-   value_at_index = df.iloc[5]
-   value_at_index
-   ```
-
----
-
-## Dataset Details
-The dataset used in **Lab Task 3** contains the following:
-
-- **Shape**: 126,030 rows and 8 columns.
-- **Columns**:
-  - **Categorical**: 'job', 'education', 'contact', 'month', 'day_of_week', 'y'
-  - **Numerical**: 'age', 'duration'
-- **No Missing Values** were found.
-- **Key Statistics**: Numerical columns include measures such as mean, min, max, and quartiles, while categorical columns include frequencies and unique value counts.
-
-For more details, see the [Lab Task 3 Directory](Ai-Lab-Work-Copy-Paste/Lab%20Task%203/).
-
----
-
-## Additional Lab Directories
-
-The repository also contains other lab tasks, each focused on specific concepts. You can explore them below:
-
-- [Lab Task 4](https://github.com/hamnasz/Ai-Lab-Work-Copy-Paste/tree/main/Lab%20Task%204/)
-- [Lab Task 6](https://github.com/hamnasz/Ai-Lab-Work-Copy-Paste/tree/main/Lab%20Task%206/)
-- [Lab Task 8](https://github.com/hamnasz/Ai-Lab-Work-Copy-Paste/tree/main/Lab%20Task%208/)
-- [Lab Task 9](https://github.com/hamnasz/Ai-Lab-Work-Copy-Paste/tree/main/Lab%20Task%209/)
+## Lab Directory
+[Lab Task 3: Pandas Data Manipulation](https://github.com/hamnasz/Ai-Lab-Work-Copy-Paste/tree/main/Lab%20Task%203/)
 
 ---
 
