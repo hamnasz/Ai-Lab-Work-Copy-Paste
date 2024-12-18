@@ -90,11 +90,77 @@ print(a.count('my')) # Output: 2
 
 ---
 
+---
+
+### [Lab Task 3](Ai-Lab-Work-Copy-Paste/Lab%20Task%203/)
+In **Lab Task 3**, we worked with the **data.csv** file for data analysis using Pandas. The dataset includes columns like 'job', 'education', 'contact', and others, with 126,030 rows and 8 columns.
+
+Key tasks performed:
+
+1. **Read and Inspect Data**:
+   ```python
+   import pandas as pd
+   df = pd.read_csv('data.csv')
+   df.head()
+   df.shape
+   df.info()
+   ```
+
+2. **Check Missing Values**:
+   ```python
+   df.isnull()
+   df.isnull().sum()
+   ```
+
+3. **Change Data Types**:
+   ```python
+   for col in df.select_dtypes(include=['object']).columns:
+       df[col] = df[col].astype('category')
+   df.dtypes
+   ```
+
+4. **Descriptive Statistics**:
+   ```python
+   df.describe().T
+   ```
+
+5. **Group and Aggregate Data**:
+   ```python
+   df.groupby('BASEL_BBQ_weather').mean()
+   ```
+
+6. **Check Presence of a Value**:
+   ```python
+   is_present = True in df['BASEL_BBQ_weather'].values
+   is_present
+   ```
+
+7. **Access Specific Data**:
+   ```python
+   value_at_index = df.iloc[5]
+   value_at_index
+   ```
+
+---
+
+## Dataset Details
+The dataset used in **Lab Task 3** contains the following:
+
+- **Shape**: 126,030 rows and 8 columns.
+- **Columns**:
+  - **Categorical**: 'job', 'education', 'contact', 'month', 'day_of_week', 'y'
+  - **Numerical**: 'age', 'duration'
+- **No Missing Values** were found.
+- **Key Statistics**: Numerical columns include measures such as mean, min, max, and quartiles, while categorical columns include frequencies and unique value counts.
+
+For more details, see the [Lab Task 3 Directory](Ai-Lab-Work-Copy-Paste/Lab%20Task%203/).
+
+---
+
 ## Additional Lab Directories
 
 The repository also contains other lab tasks, each focused on specific concepts. You can explore them below:
 
-- [Lab Task 3](https://github.com/hamnasz/Ai-Lab-Work-Copy-Paste/tree/main/Lab%20Task%203/)
 - [Lab Task 4](https://github.com/hamnasz/Ai-Lab-Work-Copy-Paste/tree/main/Lab%20Task%204/)
 - [Lab Task 6](https://github.com/hamnasz/Ai-Lab-Work-Copy-Paste/tree/main/Lab%20Task%206/)
 - [Lab Task 8](https://github.com/hamnasz/Ai-Lab-Work-Copy-Paste/tree/main/Lab%20Task%208/)
