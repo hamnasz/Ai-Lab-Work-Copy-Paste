@@ -480,6 +480,153 @@ gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
    - Morphological operations are applied with varying kernel sizes (`(3x3)`, `(5x5)`, `(7x7)`).
 
 ---
+### Lab 8 Explanation: Building an Artificial Neural Network (ANN)
+
+The provided code demonstrates how to preprocess data and build a binary classification ANN using **TensorFlow** and **Keras**.
+
+---
+
+### Detailed Steps and Functions
+
+#### **1. Import Libraries**
+```python
+import tensorflow as tf
+import numpy as np
+import pandas as pd
+from sklearn.metrics import accuracy_score
+```
+- **`tensorflow`**: Framework for building and training deep learning models.
+- **`numpy`**: Used for numerical operations on arrays.
+- **`pandas`**: Provides tools for data manipulation.
+- **`sklearn.metrics.accuracy_score`**: Evaluates the accuracy of predictions.
+
+---
+
+#### **2. Load and Prepare the Dataset**
+```python
+data = pd.read_csv("data.csv")
+X = data.iloc[:,3:-1].values
+Y = data.iloc[:,-1].values
+```
+- **`pd.read_csv("data.csv")`**: Reads the dataset from a CSV file.
+- **`data.iloc[:,3:-1]`**:
+  - Selects feature columns starting from the 4th column (index 3) to the second-last column.
+  - **`X`**: Input features.
+- **`data.iloc[:,-1]`**:
+  - Selects the last column as the target variable.
+  - **`Y`**: Target labels.
+
+---
+
+#### **3. Encode Categorical Data**
+```python
+from sklearn.preprocessing import LabelEncoder
+LE1 = LabelEncoder()
+X[:,2] = np.array(LE1.fit_transform(X[:,2]))
+```
+- **`LabelEncoder`**:
+  - Encodes categorical features into numerical values (e.g., "Male" to 0, "Female" to 1).
+  - Applied to the third column (`X[:,2]`) of the dataset.
+
+---
+
+#### **4. One-Hot Encoding**
+```python
+from sklearn.compose import ColumnTransformer
+from sklearn.preprocessing import OneHotEncoder
+ct = ColumnTransformer(transformers=[('encoder', OneHotEncoder(), [1])], remainder="passthrough")
+X = np.array(ct.fit_transform(X))
+```
+- **`ColumnTransformer`**:
+  - Applies **OneHotEncoder** to the second column (`[1]`) of the dataset.
+  - Converts categorical variables into a binary matrix.
+  - Example: "Red", "Green", "Blue" → [1, 0, 0], [0, 1, 0], [0, 0, 1].
+- **`remainder="passthrough"`**:
+  - Keeps the rest of the columns unchanged.
+
+---
+
+#### **5. Split the Dataset**
+```python
+from sklearn.model_selection import train_test_split
+X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.2, random_state=0)
+```
+- **`train_test_split`**:
+  - Splits the dataset into training and testing sets.
+  - **`test_size=0.2`**: 20% of the data is used for testing.
+  - **`random_state=0`**: Ensures reproducibility.
+
+---
+
+#### **6. Feature Scaling**
+```python
+from sklearn.preprocessing import StandardScaler
+sc = StandardScaler()
+X_train = sc.fit_transform(X_train)
+X_test = sc.transform(X_test)
+```
+- **`StandardScaler`**:
+  - Normalizes features by removing the mean and scaling to unit variance.
+  - Ensures all features contribute equally to the model.
+
+---
+
+#### **7. Build the ANN**
+```python
+ann = tf.keras.models.Sequential()
+ann.add(tf.keras.layers.Dense(units=6, activation="relu"))
+ann.add(tf.keras.layers.Dense(units=1, activation="sigmoid"))
+```
+- **`tf.keras.models.Sequential`**:
+  - Initializes a sequential model, where layers are added one after another.
+
+- **First Layer**:
+  - **`Dense(units=6)`**: Dense (fully connected) layer with 6 neurons.
+  - **`activation="relu"`**: Rectified Linear Unit activation function.
+
+- **Output Layer**:
+  - **`Dense(units=1)`**: Output layer with 1 neuron.
+  - **`activation="sigmoid"`**:
+    - Outputs a probability between 0 and 1 (for binary classification).
+
+---
+
+#### **8. Compile the Model**
+```python
+ann.compile(optimizer="adam", loss="binary_crossentropy", metrics=['accuracy'])
+```
+- **`optimizer="adam"`**:
+  - Adaptive Moment Estimation (Adam) optimization algorithm.
+  - Efficient for large datasets and non-stationary objectives.
+
+- **`loss="binary_crossentropy"`**:
+  - Loss function for binary classification tasks.
+
+- **`metrics=['accuracy']`**:
+  - Tracks accuracy during training and evaluation.
+
+---
+
+#### **9. Train the Model**
+```python
+ann.fit(X_train, Y_train, batch_size=32, epochs=100)
+```
+- **`X_train`**, **`Y_train`**: Training data and labels.
+- **`batch_size=32`**:
+  - Number of samples processed before updating model weights.
+- **`epochs=100`**:
+  - Number of complete passes through the training dataset.
+
+---
+
+### Overview of Process
+1. Data preprocessing (encoding, scaling, splitting).
+2. Building a simple ANN architecture.
+3. Compiling the model with appropriate loss and optimizer.
+4. Training the model over 100 epochs.
+
+---
+
 
 ## Repository Structure
 
