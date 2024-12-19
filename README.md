@@ -328,6 +328,88 @@ The graph displays a clear linear relationship between the variables, with the r
 
 ---
 
+# Lab Task 6: Working with OpenCV for Image Manipulation
+
+This lab focused on utilizing OpenCV, a powerful computer vision library, to perform basic image manipulations such as reading, displaying, and cropping specific regions of an image.
+
+---
+## Objective
+To learn how to:
+1. Read and display images using OpenCV.
+2. Crop specific regions of an image (e.g., face and body) for focused analysis.
+3. Understand pixel-based image manipulation.
+
+---
+## Code Details
+
+### Libraries Used
+- **OpenCV (`cv2`)**: A library for computer vision tasks, including image processing, video capture, and analysis.
+
+### Code Implementation
+```python
+import cv2
+
+# Reading the image
+image = cv2.imread("girl.jfif")
+
+# Displaying the original image
+cv2.imshow("Original", image)
+
+# Cropping the face region from the image
+face = image[85:250, 85:220]
+cv2.imshow("Face", face)
+cv2.waitKey(0)
+
+# Cropping the body region from the image
+body = image[90:450, 0:290]
+cv2.imshow("Body", body)
+cv2.waitKey(0)
+```
+
+### Explanation of Steps
+1. **Read the Image**:
+   - `cv2.imread("girl.jfif")` reads the image file into a matrix of pixel values.
+   - Ensure the file "girl.jfif" is present in the same directory as the script.
+
+2. **Display the Image**:
+   - `cv2.imshow("Original", image)` opens a window displaying the full image.
+
+3. **Crop Regions**:
+   - **Face Region**: Extracted using slicing: `image[85:250, 85:220]`.
+   - **Body Region**: Extracted using slicing: `image[90:450, 0:290]`.
+
+4. **Display Cropped Regions**:
+   - Separate windows show the cropped face and body.
+
+5. **Wait for User Input**:
+   - `cv2.waitKey(0)` waits indefinitely until a key is pressed to close the window.
+
+---
+## Output
+### Original Image
+Displays the entire image as loaded from the file.
+
+### Cropped Regions
+- **Face**: A focused section of the image showing the face.
+- **Body**: A larger section of the image showing the body.
+
+---
+## Prerequisites
+1. Install OpenCV:
+   ```bash
+   pip install opencv-python
+   ```
+2. Place the image file (`girl.jfif`) in the working directory.
+
+---
+## Observations
+- OpenCV provides efficient tools to manipulate and process images at the pixel level.
+- Cropping regions requires an understanding of matrix indexing.
+
+---
+## Lab Directory
+[Lab Task 6](https://github.com/hamnasz/Ai-Lab-Work-Copy-Paste/tree/main/Lab%20Task%206/)
+
 ## Repository Structure
 
 The repository is organized as follows:
