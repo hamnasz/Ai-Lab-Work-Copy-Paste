@@ -626,7 +626,192 @@ ann.fit(X_train, Y_train, batch_size=32, epochs=100)
 4. Training the model over 100 epochs.
 
 ---
+### Lab 9 Explanation: Unzipping and Processing Images
 
+This program demonstrates how to:
+1. Extract a ZIP file containing images.
+2. Process images by displaying them in **original**, **grayscale**, and **simulated NIR (Near Infrared)** formats.
+
+---
+
+### Step-by-Step Explanation
+
+#### **1. Import Necessary Libraries**
+```python
+import os
+import zipfile
+from IPython.display import display, Image
+from PIL import Image as PILImage
+import matplotlib.pyplot as plt
+```
+- **`os`**: Handles file and directory paths.
+- **`zipfile`**: Extracts files from a ZIP archive.
+- **`PIL (Pillow)`**: For image processing (e.g., opening, editing, and converting images).
+- **`matplotlib.pyplot`**: Visualizes images in various formats.
+
+---
+
+#### **2. Define Paths**
+```python
+directory_to_extract_to = 'extracted_images'
+```
+- **`directory_to_extract_to`**: Specifies the folder where ZIP files will be extracted.  
+  Example Path: `'extracted_images/'`
+
+---
+
+#### **3. Extract the ZIP File**
+```python
+with zipfile.ZipFile('Image.zip', 'r') as zip_ref:
+    zip_ref.extractall(directory_to_extract_to)
+```
+- **`zipfile.ZipFile('Image.zip', 'r')`**: Opens the ZIP file named `Image.zip` in read mode.
+- **`.extractall(directory_to_extract_to)`**: Extracts all files into the folder `extracted_images`.
+
+---
+
+#### **4. Create an Output Folder (If Not Exists)**
+```python
+extraction_folder = 'image'
+if not os.path.exists(extraction_folder):
+    os.makedirs(extraction_folder)
+```
+- **`os.makedirs()`**: Creates the folder `'image'` if it doesn't already exist.
+  Example Path: `'image/'`
+
+---
+
+#### **5. Define the Unzipping Function**
+```python
+def unzip_folder(zip_file_path, extraction_folder):
+    # Code to unzip the folder
+    pass
+```
+This placeholder function can be implemented to generalize unzipping functionality.
+
+---
+
+#### **6. List and Display Extracted Images**
+```python
+extracted_folder = 'extracted_images'
+
+for file_name in os.listdir(extracted_folder):
+    if file_name.lower().endswith(('png', 'jpg', 'jpeg', 'bmp', 'gif')):
+        image_path = os.path.join(extracted_folder, file_name)
+        img = Image.open(image_path)
+        plt.imshow(img)
+        plt.axis('off')
+        plt.show()
+```
+- **`os.listdir()`**: Lists all files in the `extracted_folder`.
+- **`os.path.join()`**: Combines folder path with filenames to create complete file paths.
+- **`Image.open(image_path)`**: Opens each image file.
+
+Example Files:
+- `extracted_images/anime.jfif`
+- `extracted_images/girl.jfif`
+- `extracted_images/image.jpg`
+
+---
+
+#### **7. Unzip and Process Images**
+```python
+def unzip_and_process_images(zip_file_path, extract_to_folder):
+    if not os.path.exists(zip_file_path):
+        print(f"Error: The file {zip_file_path} does not exist.")
+        return
+
+    with zipfile.ZipFile(zip_file_path, 'r') as zip_ref:
+        zip_ref.extractall(extract_to_folder)
+
+    image_files = [
+        os.path.join(extract_to_folder, file)
+        for file in os.listdir(extract_to_folder)
+        if file.lower().endswith(('png', 'jpg', 'jpeg', 'bmp', 'gif'))
+    ]
+
+    if not image_files:
+        print("No images found in the extracted folder.")
+        return
+
+    for image_file in image_files:
+        process_image(image_file)
+```
+- Checks if the ZIP file exists and extracts it.
+- **`image_files`**: Filters and lists all image files with specific extensions.
+- Calls **`process_image(file_path)`** for each image file.
+
+---
+
+#### **8. Process Individual Images**
+```python
+def process_image(file_path):
+    try:
+        img = Image.open(file_path)
+        grayscale_img = img.convert('L')  # Converts to grayscale
+        nir_img = img.split()[0]  # Simulates NIR using the red channel
+
+        plt.figure(figsize=(15, 5))
+
+        plt.subplot(1, 3, 1)
+        plt.imshow(img)
+        plt.axis('off')
+        plt.title('Original Image')
+
+        plt.subplot(1, 3, 2)
+        plt.imshow(grayscale_img, cmap='gray')
+        plt.axis('off')
+        plt.title('Grayscale Image')
+
+        plt.subplot(1, 3, 3)
+        plt.imshow(nir_img, cmap='gray')
+        plt.axis('off')
+        plt.title('Simulated NIR Image')
+
+        plt.show()
+    except Exception as e:
+        print(f"Error processing the image {file_path}: {e}")
+```
+- **`grayscale_img`**: Converts the original image to grayscale.
+- **`nir_img`**: Uses the red channel of the image as a simulated NIR image.
+- **`plt.figure(figsize=(15, 5))`**: Creates a plot for displaying the images.
+- Subplots:
+  - Original Image
+  - Grayscale Image
+  - Simulated NIR Image
+
+Example Paths:
+- `'extracted_images/anime.jfif'`
+- `'extracted_images/girl.jfif'`
+- `'extracted_images/image.jpg'`
+
+---
+
+#### **9. Execute the Script**
+```python
+zip_file_path = 'images.zip'
+extract_to_folder = 'extracted_images'
+
+if not os.path.exists(extract_to_folder):
+    os.makedirs(extract_to_folder)
+
+unzip_and_process_images(zip_file_path, extract_to_folder)
+```
+- **`zip_file_path`**: Path to the ZIP file (`images.zip`).
+- **`extract_to_folder`**: Folder where files will be extracted (`extracted_images`).
+- Calls **`unzip_and_process_images()`** to execute the process.
+
+---
+
+### Example Output Paths:
+1. **ZIP File**: `'images.zip'`
+2. **Extracted Folder**: `'extracted_images/'`
+3. **Image Files**:
+   - `'extracted_images/anime.jfif'`
+   - `'extracted_images/girl.jfif'`
+   - `'extracted_images/image.jpg'`
+
+---
 
 ## Repository Structure
 
