@@ -201,6 +201,132 @@ print(value_at_index)
 [Lab Task 3: Pandas Data Manipulation](https://github.com/hamnasz/Ai-Lab-Work-Copy-Paste/tree/main/Lab%20Task%203/)
 
 ---
+# Lab Task 4: Linear Regression with Data Visualization
+
+This lab focuses on implementing a simple linear regression model using Python libraries such as NumPy, Pandas, Matplotlib, and Scikit-learn. Additionally, the task involves visualizing the regression results using a scatter plot and line graph.
+
+---
+
+## Objective
+To develop a foundational understanding of linear regression by:
+1. Preparing synthetic and real-world datasets.
+2. Splitting data into training and testing sets.
+3. Training a linear regression model.
+4. Making predictions and visualizing the results.
+
+---
+
+## Steps Performed
+
+### 1. **Importing Required Libraries**
+The following libraries were used:
+- **NumPy**: For generating random numbers and numerical computations.
+- **Pandas**: For loading and analyzing the dataset.
+- **Matplotlib**: For data visualization.
+- **Scikit-learn**: For splitting data into train/test sets and implementing linear regression.
+
+```python
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LinearRegression
+```
+
+---
+
+### 2. **Dataset Overview**
+
+#### Synthetic Dataset:
+- Features (‘x’): Generated using NumPy random functions.
+- Target (‘y’): Generated using a linear equation with noise.
+
+```python
+np.random.seed(0)
+x = 2 * np.random.rand(100, 1)
+y = 4 + 3 * x + np.random.rand(100, 1)
+```
+
+#### Real-World Dataset:
+- The provided dataset, `data.csv`, contains the following columns:
+  - **Date**: Date of activity.
+  - **Usage**: Time spent using the app.
+  - **Notifications**: Number of notifications received.
+  - **Times Opened**: Frequency of app openings.
+  - **App**: Name of the application.
+
+```python
+df = pd.read_csv('data.csv')
+print(df.head())
+```
+
+#### Example Data:
+| Date       | Usage | Notifications | Times Opened | App       |
+|------------|-------|---------------|--------------|-----------|
+| 08/26/2022 | 38    | 70            | 49           | Instagram |
+| 08/27/2022 | 39    | 43            | 48           | Instagram |
+| 08/28/2022 | 64    | 231           | 55           | Instagram |
+| 08/29/2022 | 14    | 35            | 23           | Instagram |
+| 08/30/2022 | 3     | 19            | 5            | Instagram |
+
+---
+
+### 3. **Data Splitting**
+The synthetic dataset was split into training and testing sets using an 80-20 ratio.
+
+```python
+X_train, X_test, y_train, y_test = train_test_split(x, y, test_size=0.2, random_state=42)
+```
+
+---
+
+### 4. **Model Training**
+A linear regression model was trained using Scikit-learn's `LinearRegression` class.
+
+```python
+model = LinearRegression()
+model.fit(X_train, y_train)
+```
+
+---
+
+### 5. **Prediction**
+The trained model was used to predict target values for the test dataset.
+
+```python
+y_pred = model.predict(X_test)
+```
+
+---
+
+### 6. **Visualization**
+A scatter plot and regression line were plotted to visualize the model's predictions against actual test data.
+
+```python
+plt.scatter(X_test, y_test, color='b', label='Actual Data')
+plt.plot(X_test, y_pred, color='r', label='Regression Line')
+plt.xlabel('X-axis')
+plt.ylabel('Y-axis')
+plt.legend()
+plt.show()
+```
+
+#### Visualization Output:
+The graph displays a clear linear relationship between the variables, with the regression line closely following the trend of the actual data points.
+
+---
+
+## Key Observations
+- The linear regression model effectively learned the relationship between the input and output variables.
+- The scatter plot and regression line visualization help assess the model's accuracy visually.
+- The dataset `data.csv` provides meaningful information on app usage that can be further explored using similar regression techniques.
+
+---
+
+## Lab Directory
+[Lab Task 4: Linear Regression](https://github.com/hamnasz/Ai-Lab-Work-Copy-Paste/tree/main/Lab%20Task%204/)
+
+---
 
 ## Repository Structure
 
