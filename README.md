@@ -328,87 +328,158 @@ The graph displays a clear linear relationship between the variables, with the r
 
 ---
 
-# Lab Task 6: Working with OpenCV for Image Manipulation
+# Lab Task 6:
 
-This lab focused on utilizing OpenCV, a powerful computer vision library, to perform basic image manipulations such as reading, displaying, and cropping specific regions of an image.
-
----
-## Objective
-To learn how to:
-1. Read and display images using OpenCV.
-2. Crop specific regions of an image (e.g., face and body) for focused analysis.
-3. Understand pixel-based image manipulation.
-
----
-## Code Details
-
-### Libraries Used
-- **OpenCV (`cv2`)**: A library for computer vision tasks, including image processing, video capture, and analysis.
-
-### Code Implementation
+## File 1: **Crop Image**
+### Code:
 ```python
 import cv2
-
-# Reading the image
 image = cv2.imread("girl.jfif")
-
-# Displaying the original image
 cv2.imshow("Original", image)
-
-# Cropping the face region from the image
 face = image[85:250, 85:220]
 cv2.imshow("Face", face)
 cv2.waitKey(0)
-
-# Cropping the body region from the image
 body = image[90:450, 0:290]
 cv2.imshow("Body", body)
 cv2.waitKey(0)
 ```
+### Functions:
+1. **`cv2.imread("girl.jfif")`**:
+   - Reads the input image file `"girl.jfif"` into a NumPy array.
+   - Mode: Default (color image).
 
-### Explanation of Steps
-1. **Read the Image**:
-   - `cv2.imread("girl.jfif")` reads the image file into a matrix of pixel values.
-   - Ensure the file "girl.jfif" is present in the same directory as the script.
+2. **`cv2.imshow("Original", image)`**:
+   - Displays the original image in a new window titled `"Original"`.
 
-2. **Display the Image**:
-   - `cv2.imshow("Original", image)` opens a window displaying the full image.
+3. **`image[85:250, 85:220]`**:
+   - Crops the specified rectangular region from the image (`[y1:y2, x1:x2]`).
+   - Extracts the "Face" region.
 
-3. **Crop Regions**:
-   - **Face Region**: Extracted using slicing: `image[85:250, 85:220]`.
-   - **Body Region**: Extracted using slicing: `image[90:450, 0:290]`.
+4. **`cv2.imshow("Face", face)`**:
+   - Displays the cropped face region.
 
-4. **Display Cropped Regions**:
-   - Separate windows show the cropped face and body.
+5. **`image[90:450, 0:290]`**:
+   - Crops another region from the image corresponding to the "Body."
 
-5. **Wait for User Input**:
-   - `cv2.waitKey(0)` waits indefinitely until a key is pressed to close the window.
+6. **`cv2.imshow("Body", body)`**:
+   - Displays the cropped body region.
 
----
-## Output
-### Original Image
-Displays the entire image as loaded from the file.
-
-### Cropped Regions
-- **Face**: A focused section of the image showing the face.
-- **Body**: A larger section of the image showing the body.
+7. **`cv2.waitKey(0)`**:
+   - Waits indefinitely for a key press to close the image window.
 
 ---
-## Prerequisites
-1. Install OpenCV:
-   ```bash
-   pip install opencv-python
-   ```
-2. Place the image file (`girl.jfif`) in the working directory.
+
+## File 2: **Image Processing**
+### Code:
+```python
+import cv2
+import numpy as np
+image = cv2.imread('image.jpg', cv2.IMREAD_GRAYSCALE)
+kernel_size = 5
+kernel = np.ones((kernel_size, kernel_size), np.uint8)
+eroded_image = cv2.erode(image, kernel, iterations=1)
+cv2.imshow('Original Image', image)
+cv2.imshow('Eroded Image', eroded_image)
+cv2.waitKey(0)
+cv2.destroyAllWindows()
+```
+### Functions:
+1. **`cv2.IMREAD_GRAYSCALE`**:
+   - Loads the image (`image.jpg`) in grayscale mode.
+
+2. **`np.ones((kernel_size, kernel_size), np.uint8)`**:
+   - Creates a square kernel (5x5) filled with ones, used for morphological operations.
+
+3. **`cv2.erode(image, kernel, iterations=1)`**:
+   - Erodes the input image to reduce noise or thin the boundaries of objects.
+   - One iteration is performed.
+
+4. **`cv2.imshow('Original Image', image)`**:
+   - Displays the original grayscale image.
+
+5. **`cv2.imshow('Eroded Image', eroded_image)`**:
+   - Displays the eroded image.
+
+6. **`cv2.destroyAllWindows()`**:
+   - Closes all open image windows.
 
 ---
-## Observations
-- OpenCV provides efficient tools to manipulate and process images at the pixel level.
-- Cropping regions requires an understanding of matrix indexing.
+
+## File 3: **Load and Display**
+### Code:
+```python
+import argparse
+import cv2
+import sys
+sys.argv = ['']
+ap = argparse.ArgumentParser()
+ap.add_argument("-i", "--image", required=True, help="Path to the image")
+
+args = vars(ap.parse_args(["--image", "anime.jfif"]))
+image = cv2.imread(args["image"])
+print("width: {w} pixels".format(w=image.shape[1]))
+print("height: {h}  pixels".format(h=image.shape[0]))
+print("channels: {c}".format(c=image.shape[2]))
+cv2.imshow("Image", image)
+cv2.waitKey(0)
+cv2.imwrite("newimage.jpg", image)
+```
+### Functions:
+1. **`argparse.ArgumentParser()`**:
+   - Used for parsing command-line arguments. Adds an argument for the image path.
+
+2. **`cv2.imread(args["image"])`**:
+   - Reads the image specified in the command-line argument (`anime.jfif`).
+
+3. **Image Properties**:
+   - `image.shape[1]`: Width of the image.
+   - `image.shape[0]`: Height of the image.
+   - `image.shape[2]`: Number of color channels (e.g., RGB has 3 channels).
+
+4. **`cv2.imshow("Image", image)`**:
+   - Displays the loaded image.
+
+5. **`cv2.imwrite("newimage.jpg", image)`**:
+   - Saves the displayed image to a new file (`newimage.jpg`).
 
 ---
-## Lab Directory
-[Lab Task 6](https://github.com/hamnasz/Ai-Lab-Work-Copy-Paste/tree/main/Lab%20Task%206/)
+
+## File 4: **Morphological Operations**
+### Code:
+```python
+import argparse
+import cv2
+args = {"image": "rene.jfif"}
+ap = argparse.ArgumentParser()
+ap.add_argument("-i", "--image", required=True, help="Path to the image")
+args = vars(ap.parse_args())
+image = cv2.imread(args["image"])
+gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+...
+```
+### Functions:
+1. **`cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)`**:
+   - Converts the image to grayscale.
+
+2. **Erosion (`cv2.erode`)**:
+   - Shrinks bright regions. Iterative erosion is performed three times, and each result is displayed.
+
+3. **Dilation (`cv2.dilate`)**:
+   - Expands bright regions. Iterative dilation is performed three times.
+
+4. **Opening (`cv2.morphologyEx(gray, cv2.MORPH_OPEN, kernel)`)**:
+   - Removes small objects from the foreground (erosion followed by dilation).
+
+5. **Closing (`cv2.morphologyEx(gray, cv2.MORPH_CLOSE, kernel)`)**:
+   - Fills small holes in the foreground (dilation followed by erosion).
+
+6. **Gradient (`cv2.morphologyEx(gray, cv2.MORPH_GRADIENT, kernel)`)**:
+   - Highlights the edges of objects by computing the difference between dilation and erosion.
+
+7. **Kernel Sizes**:
+   - Morphological operations are applied with varying kernel sizes (`(3x3)`, `(5x5)`, `(7x7)`).
+
+---
 
 ## Repository Structure
 
